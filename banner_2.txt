@@ -1,0 +1,13 @@
+##########    #       ##########     #        #    #   
+         #   ########       ###  ########## ########## 
+   #    #   #       #      #     #        #   #    #   
+    # ##   #      ##      #             ##         #   
+    ##          ##       #            ##          #    
+  ##  #       ##        #           ##           #     
+##     #    ##         #          ##           #       
+                                                       
+The present script was written by Denis REMACLE, Amad MOHAMMAD and Stan TARTAGLIA.
+Licensed under GPL 3.0 you are free to do whatever you want with it.
+Due to the nature of the script we disavow malevolant use of said script.
+
+Use it responsibly !

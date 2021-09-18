@@ -57,6 +57,6 @@ if __name__ == "__main__":
         exit()
 
     # Print a banner
-    system("cat banner_%d.txt" % randint(0, 5))
+    system("cat banner/banner_%d.txt" % randint(0, 5))
     interface = get_interfaces()
     target = get_target(interface)

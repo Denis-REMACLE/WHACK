@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-from os import geteuid, system, listdir
+import os
 from random import randint
 
 def get_interfaces():
     
     # Get the list of equipments from /sys/classe/net
     print("\nGetting interfaces list ...\n")   
-    availableIfaces = [str(i) for i in listdir("/sys/class/net")]
+    availableIfaces = [str(i) for i in os.listdir("/sys/class/net")]
 
     choices = {}
     # Processing the interfaces into a readable dictionnary
@@ -20,7 +20,8 @@ def get_interfaces():
 
     # Check if the choice is good
     while userChoice not in choices:
-        userChoice = input("\nThis is not quite right !\nPlease choose an interface to use : ")
+        print("\nThis is not quite right !")
+        userChoice = input("\nPlease choose an interface to use : ")
 
     # Get only the prefered interface to keep track of
     interface = choices[userChoice]
@@ -30,7 +31,12 @@ def get_interfaces():
 def get_target(interface):
     
     print("\nGetting nearby AP list ...\n")
-    system("iw dev "+interface+" scan | grep \"SSID:\" | rev | cut -d \":\" -f1 | rev | sed '/^*/d' > interfaces.tmp")
+    os.system("iw dev "+interface+" scan\
+                | grep \"SSID:\"\
+                | rev \
+                | cut -d \":\" -f1 \
+                | rev \
+                | sed '/^*/d' > interfaces.tmp")
     
     choices = {}
     number = 0
@@ -42,9 +48,10 @@ def get_target(interface):
     
     userChoice = input("\nPlease choose the AP you want to target : ")
     while userChoice not in choices:
-        userChoice = input("\nThis is not quite right !\nPlease choose the AP you want to target : ")
+        print("\nThis is not quite right !")
+        userChoice = input("\nPlease choose the AP you want to target : ")
     
-    system("rm interfaces.tmp")
+    os.system("rm interfaces.tmp")
     target = choices[userChoice]
     print("\nYou chose : "+target)
     return target
@@ -52,11 +59,13 @@ def get_target(interface):
 if __name__ == "__main__":
     
     # Check for root privileges
-    if geteuid()!=0:
+    if os.geteuid()!=0:
         print("You need sudo for that")
         exit()
 
     # Print a banner
-    system("cat banner/banner_%d.txt" % randint(0, 5))
+    f = open("banner/banner_%d.txt" % randint(0, 5), 'r')
+    f.read()
+    f.close()
     interface = get_interfaces()
     target = get_target(interface)

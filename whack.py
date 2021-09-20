@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 from random import randint
+import re
 
 def get_interfaces():
     
@@ -12,11 +13,18 @@ def get_interfaces():
     # Processing the interfaces into a readable dictionnary
     # And print the interfaces to the user
     for i in range(len(availableIfaces)):
-        print("[%i] : %s" %(i, availableIfaces[i]))
-        choices[str(i)] = str(availableIfaces[i])
+        if re.match("/wlan|wlp5s/", availableIfaces[i]):
+            print("[%i] : %s" %(i, availableIfaces[i]))
+            choices[str(i)] = str(availableIfaces[i])
+        else:
+            continue
 
     # Ask user for prefered interface
-    userChoice = input("\nPlease choose an interface to use : ")
+    if len(choices) != 0:
+        userChoice = input("\nPlease choose an interface to use : ")
+    else:
+        print("No available interfaces")
+        exit()
 
     # Check if the choice is good
     while userChoice not in choices:
@@ -64,8 +72,6 @@ if __name__ == "__main__":
         exit()
 
     # Print a banner
-    f = open("banner/banner_%d.txt" % randint(0, 5), 'r')
-    f.read()
-    f.close()
+    os.system("cat banner/banner_%d.txt" % randint(0, 5))
     interface = get_interfaces()
     target = get_target(interface)

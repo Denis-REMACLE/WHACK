@@ -57,7 +57,8 @@ def get_target(interface):
         userChoice = str(input("\nPlease choose the AP you want to target : "))
     
     os.system("rm interfaces.tmp")
-    target = choices[userChoice]
+
+    target = choices[userChoice.split()]
     print("\nYou chose : "+target)
     return target
 

@@ -10,12 +10,14 @@ def get_interfaces():
     availableIfaces = [str(i) for i in os.listdir("/sys/class/net")]
 
     choices = {}
+    listNum = 0
     # Processing the interfaces into a readable dictionnary
     # And print the interfaces to the user
     for i in range(len(availableIfaces)):
         if re.match("wl", availableIfaces[i]):
-            print("[%i] : %s" %(i, availableIfaces[i]))
-            choices[str(i)] = str(availableIfaces[i])
+            print("[%i] : %s" %(listNum, availableIfaces[i]))
+            choices[str(listNum)] = str(availableIfaces[i])
+            listNum+=1
         else:
             continue
 

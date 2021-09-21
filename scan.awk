@@ -21,6 +21,6 @@ $1 == "WEP:" {
 }
 END {
     for (w in wifi) {
-        printf "%s,\t\t %s,\t\t %s\n",wifi[w]["SSID"],wifi[w]["mac"],wifi[w]["enc"]
+        printf "%s40,\t\t %s,\t\t %s\n",wifi[w]["SSID"],wifi[w]["mac"],wifi[w]["enc"]
     }
 }

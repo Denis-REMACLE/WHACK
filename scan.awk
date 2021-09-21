@@ -1,5 +1,5 @@
 $1 == "BSS" {
-    split($2, mac, "\(")
+    split($2, mac, "(")
     MAC = mac[1]
     wifi[MAC]["mac"] = MAC
     wifi[MAC]["enc"] = "Open"
@@ -21,6 +21,6 @@ $1 == "WEP:" {
 }
 END {
     for (w in wifi) {
-        printf "%s,%s,%s\n",wifi[w]["SSID"],wifi[w]["mac"],wifi[w]["enc"]
+        printf "%s,\t %s,\t %s\n",wifi[w]["SSID"],wifi[w]["mac"],wifi[w]["enc"]
     }
 }

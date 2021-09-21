@@ -50,6 +50,7 @@ def get_target(interface):
             choices[str(number)] = accessPoint.strip("\n")
             number+=1
     
+    print(choices)
     for aps in choices:
         print(aps)
     userChoice = str(input("\nPlease choose the AP you want to target : "))

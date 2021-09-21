@@ -1,5 +1,6 @@
 $1 == "BSS" {
-    MAC = split($2, mac, "\(")
+    split($2, mac, "\(")
+    MAC = mac[1]
     wifi[MAC]["mac"] = MAC
     wifi[MAC]["enc"] = "Open"
 }

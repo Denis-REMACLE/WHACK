@@ -60,7 +60,7 @@ def get_target(interface):
 
     target = choices[userChoice].split(',')
     target[1].split('(')
-    print("\nYou chose : "+target[0])
+    print("\nYou chose : "+target[1])
     return target
 
 if __name__ == "__main__":

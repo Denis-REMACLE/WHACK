@@ -59,7 +59,6 @@ def get_target(interface):
     os.system("rm interfaces.tmp")
 
     target = choices[userChoice].split(',')
-    target[1].split('(')
     print("\nYou chose : "+target[1])
     return target
 

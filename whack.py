@@ -13,7 +13,7 @@ def get_interfaces():
     # Processing the interfaces into a readable dictionnary
     # And print the interfaces to the user
     for i in range(len(availableIfaces)):
-        if re.match("/wlan|wlp5s/", availableIfaces[i]):
+        if re.match("wl", availableIfaces[i]):
             print("[%i] : %s" %(i, availableIfaces[i]))
             choices[str(i)] = str(availableIfaces[i])
         else:

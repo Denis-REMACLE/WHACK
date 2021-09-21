@@ -47,13 +47,10 @@ def get_target(interface):
     number = 0
     with open("interfaces.tmp", "r") as accessPoints:
         for accessPoint in accessPoints:
+            print("[%i] : %s" %(number, accessPoint.strip("\n")))
             choices[str(number)] = accessPoint.strip("\n")
             number+=1
     
-    print(choices)
-    for aps in range(len(choices)):
-        print(choices[str(aps)])
-        
     userChoice = str(input("\nPlease choose the AP you want to target : "))
     while userChoice not in choices:
         print("\nThis is not quite right !")

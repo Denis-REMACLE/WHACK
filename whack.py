@@ -21,7 +21,7 @@ def get_interfaces():
 
     # Ask user for prefered interface
     if len(choices) != 0:
-        userChoice = input("\nPlease choose an interface to use : ")
+        userChoice = str(input("\nPlease choose an interface to use : "))
     else:
         print("No available interfaces")
         exit()
@@ -29,7 +29,7 @@ def get_interfaces():
     # Check if the choice is good
     while userChoice not in choices:
         print("\nThis is not quite right !")
-        userChoice = input("\nPlease choose an interface to use : ")
+        userChoice = str(input("\nPlease choose an interface to use : "))
 
     # Get only the prefered interface to keep track of
     interface = choices[userChoice]

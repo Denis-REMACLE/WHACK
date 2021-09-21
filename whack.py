@@ -39,12 +39,7 @@ def get_interfaces():
 def get_target(interface):
     
     print("\nGetting nearby AP list ...\n")
-    os.system("iw dev "+interface+" scan\
-                | grep \"SSID:\"\
-                | rev \
-                | cut -d \":\" -f1 \
-                | rev \
-                | sed '/^*/d' > interfaces.tmp")
+    os.system("iw dev "+interface+" scan | awk -f scan.awk > interfaces.tmp")
     
     choices = {}
     number = 0

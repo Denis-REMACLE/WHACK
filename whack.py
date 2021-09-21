@@ -47,7 +47,7 @@ def get_target(interface):
     number = 0
     with open("interfaces.tmp", "r") as accessPoints:
         for accessPoint in accessPoints:
-            print("[%i] : %s" %(number, accessPoint.strip("\n")))
+            print("[%i] :\t%s" %(number, accessPoint.strip("\n")))
             choices[str(number)] = accessPoint.strip("\n")
             number+=1
     

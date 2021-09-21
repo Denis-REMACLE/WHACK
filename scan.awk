@@ -20,6 +20,6 @@ $1 == "WEP:" {
 }
 END {
     for (w in wifi) {
-        printf "%s,%s,%s\n",wifi[w]["SSID"],wifi[w],wifi[w]["enc"]
+        printf "%s,%s,%s\n",wifi[w]["SSID"],wifi[w]["mac"],wifi[w]["enc"]
     }
 }

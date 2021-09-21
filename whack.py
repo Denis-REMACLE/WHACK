@@ -51,10 +51,10 @@ def get_target(interface):
             choices[str(number)] = accessPoint.strip("\n")
             number+=1
     
-    userChoice = input("\nPlease choose the AP you want to target : ")
+    userChoice = str(input("\nPlease choose the AP you want to target : "))
     while userChoice not in choices:
         print("\nThis is not quite right !")
-        userChoice = input("\nPlease choose the AP you want to target : ")
+        userChoice = str(input("\nPlease choose the AP you want to target : "))
     
     os.system("rm interfaces.tmp")
     target = choices[userChoice]

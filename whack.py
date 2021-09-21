@@ -40,24 +40,32 @@ def get_interfaces():
 
 def get_target(interface):
     
+    # Scanning with the interface and parsing with AWK
     print("\nGetting nearby AP list ...\n")
     os.system("iw dev "+interface+" scan | awk -f scan.awk > interfaces.tmp")
     
     choices = {}
     number = 0
+    # Processing the potential targets into a readable dictionnary
+    # And print the potential targets to the user
     with open("interfaces.tmp", "r") as accessPoints:
         for accessPoint in accessPoints:
             print("[%i] :\t%s" %(number, accessPoint.strip("\n")))
             choices[str(number)] = accessPoint.strip("\n")
             number+=1
     
+    # Ask user for prefered target
     userChoice = str(input("\nPlease choose the AP you want to target : "))
+
+    # Check if the choice is good
     while userChoice not in choices:
         print("\nThis is not quite right !")
         userChoice = str(input("\nPlease choose the AP you want to target : "))
     
-    os.system("rm interfaces.tmp")
+    # Remove temporary file
+    os.remove("interfaces.tmp")
 
+    # Processing the target choice into a readable tab
     target = choices[userChoice].split(',')
     print("\nYou chose : "+target[0])
     return target

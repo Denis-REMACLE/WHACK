@@ -52,7 +52,7 @@ def get_target(interface):
     
     print(choices)
     for aps in range(len(choices)):
-        print(choices[aps])
+        print(choices[str(aps)])
         
     userChoice = str(input("\nPlease choose the AP you want to target : "))
     while userChoice not in choices:

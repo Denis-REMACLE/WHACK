@@ -74,12 +74,12 @@ def get_target(interface):
 def evil_twix(interface, target):
 
     # Setting interface ip address
-    os.system("ifconfig %s up" % interface)
+    os.system("ip link set %s up" % interface)
     os.system("ip addr add 192.168.1.1/24 dev %s" % interface)
 
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
-    os.system("iptables –I POSTROUTING –t nat –o %s -j MASQUERADE" % interface)
+    os.system("iptables –t nat –I POSTROUTING –o %s -j MASQUERADE" % interface)
     
     # Copy the templates in the working directory
     os.system("cp template/template_dnsmasq.conf dnsmasq.conf")

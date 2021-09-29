@@ -79,7 +79,7 @@ def evil_twix(interface, target):
 
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
-    os.system("iptables –I POSTROUTING -t nat –o %s -j MASQUERADE" % (interface+"mon"))
+    os.system("iptables –I POSTROUTING -t nat –o wlan0 -j MASQUERADE")
     
     # Copy the templates in the working directory
     os.system("cp template/template_dnsmasq.conf dnsmasq.conf")

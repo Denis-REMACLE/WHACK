@@ -1,3 +1,5 @@
+#!/usr/bin/env awk -f
+
 $1 == "BSS" {
     split($2, mac, "(")
     MAC = mac[1]

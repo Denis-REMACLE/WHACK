@@ -106,6 +106,7 @@ if __name__ == "__main__":
     interface = get_interfaces()
     target = get_target(interface)
     attacksAvailable = "(E)vil twin"
+    attacksAvailable+=" : "
     attack = input("Which attack do you want to perform : " + attacksAvailable)
     if attack == "E" or attack == "e":
         evil_twix(interface, target)

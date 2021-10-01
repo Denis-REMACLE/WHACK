@@ -76,7 +76,7 @@ def evil_twix(interface, target):
     # Setting interface ip address
     os.system("airmon-ng check kill")
     os.system("airmon-ng start %s" % interface)
-    os.system("ip link set %s up" % (interface+"mon"))
+    # os.system("ip link set %s up" % (interface+"mon"))
 
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")

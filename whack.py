@@ -98,7 +98,7 @@ def evil_twix(interface, target):
     elif dnsmasq:
         os.system("dnsmasq –d –C dnsmasq.conf")
     else:
-        os.system("wireshark -i %s -w test.pcap" % (interface+"mon"))
+        os.system("tcpdump -s 0 -i %s -w test.pcap" % (interface+"mon"))
 
 if __name__ == "__main__":
     

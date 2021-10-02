@@ -86,6 +86,8 @@ def evil_twix(interface, target):
     os.system("sed -i 's/iface_to_use/%s/' hostapd.conf" % interface)
     os.system("sed -i 's/ssid_to_use/%s/' hostapd.conf" % target[0])
 
+    os.system("ip addr add 10.0.0.1/24 dev %s" % interface)
+
     hostapd = os.fork()
     dnsmasq = os.fork()
 

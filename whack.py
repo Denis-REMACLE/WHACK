@@ -92,7 +92,7 @@ def evil_twix(interface, target):
     dnsmasq = os.fork()
 
     if dnsmasq:
-        os.system("dnsmasq –C dnsmasq.conf")
+        os.system("dnsmasq -d –C dnsmasq.conf")
     elif hostapd:
         os.system("hostapd hostapd.conf")
     else:

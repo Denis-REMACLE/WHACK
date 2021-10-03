@@ -1,7 +1,6 @@
-# Projet pédagogique
-## RogueAP (EvilTwins)
+# RogueAP (EvilTwins)
 
-__How it works__
+## How it works
 
 The "Evil Twin" attack come from the category of "phishing" attack. It main goal is to copy an access point with the same name to finally connect the victim to this access point and take the informations he enter while connected.
 
@@ -9,7 +8,7 @@ That's how Evil Twin work:
 
 The hacker will disturb the connection to the user. This user will reconnect to the Evil Twin the hacker created which will allow him to know every informations he will put during his connection.
 
-___Our Evil Twin___
+## Our Evil Twin automation script
 
 With my colleagues, we created a script who can automate the attack in Python:
 
